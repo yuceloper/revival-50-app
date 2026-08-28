@@ -14,56 +14,37 @@ struct ContentView: View {
                 Image(systemName: "scooter")
                     .font(.system(size: 30))
 
-
                 Text("Revival 50")
                     .font(.headline)
 
-
-                // -----------------------------
                 // BATTERY
-                // -----------------------------
 
                 HStack {
-
-                    Image(
-                        systemName:
-                            "battery.75percent"
-                    )
+                    Image(systemName: "battery.75percent")
 
                     if watchSession.batteryVoltage > 0 {
-
                         Text(
                             String(
                                 format: "%.2f V",
                                 watchSession.batteryVoltage
                             )
                         )
-
                     } else {
-
                         Text("--.-- V")
                     }
                 }
                 .font(.caption)
 
-
-                // -----------------------------
                 // IGNITION STATUS
-                // -----------------------------
 
                 HStack {
-
                     Circle()
-                        .frame(
-                            width: 7,
-                            height: 7
-                        )
+                        .frame(width: 7, height: 7)
                         .foregroundStyle(
                             watchSession.ignitionOn
                                 ? .green
                                 : .secondary
                         )
-
 
                     Text(
                         watchSession.ignitionOn
@@ -73,10 +54,7 @@ struct ContentView: View {
                 }
                 .font(.caption)
 
-
-                // -----------------------------
                 // CONNECTION
-                // -----------------------------
 
                 Text(
                     watchSession.isReachable
@@ -90,109 +68,71 @@ struct ContentView: View {
                         : .secondary
                 )
 
-
-                // -----------------------------
                 // LAST COMMAND RESULT
-                // -----------------------------
 
                 if !watchSession.lastResult.isEmpty {
-
-                    Text(
-                        watchSession.lastResult
-                    )
-                    .font(.caption2)
-                    .multilineTextAlignment(
-                        .center
-                    )
+                    Text(watchSession.lastResult)
+                        .font(.caption2)
+                        .multilineTextAlignment(.center)
                 }
 
-
-                // -----------------------------
                 // IGNITION
-                // -----------------------------
 
                 Button {
-
                     watchSession.sendCommand(
                         watchSession.ignitionOn
                             ? "IGNITION_OFF"
                             : "IGNITION_ON"
                     )
-
                 } label: {
-
                     Label(
                         watchSession.ignitionOn
                             ? "Kapat"
                             : "Kontak",
-
-                        systemImage:
-                            "power"
+                        systemImage: "power"
                     )
                 }
+                .buttonStyle(.borderedProminent)
+                .disabled(!watchSession.isReachable)
 
-                .buttonStyle(
-                    .borderedProminent
-                )
-
-
-                // -----------------------------
                 // STARTER
-                // -----------------------------
 
                 Button {
-
-                    watchSession.sendCommand(
-                        "START"
-                    )
-
+                    watchSession.sendCommand("START")
                 } label: {
-
                     Label(
                         watchSession.starterActive
                             ? "Marş..."
                             : "Marş",
-
                         systemImage:
                             watchSession.starterActive
                             ? "bolt.circle.fill"
                             : "bolt.fill"
                     )
                 }
-
                 .disabled(
+                    !watchSession.isReachable ||
                     !watchSession.ignitionOn ||
                     watchSession.starterActive
                 )
 
-
-                // -----------------------------
                 // SEAT
-                // -----------------------------
 
                 Button {
-
-                    watchSession.sendCommand(
-                        "SEAT_OPEN"
-                    )
-
+                    watchSession.sendCommand("SEAT_OPEN")
                 } label: {
-
                     Label(
                         watchSession.seatActive
                             ? "Açılıyor..."
                             : "Sele",
-
-                        systemImage:
-                            "lock.open.fill"
+                        systemImage: "lock.open.fill"
                     )
                 }
-
                 .disabled(
+                    !watchSession.isReachable ||
                     watchSession.seatActive
                 )
             }
-
             .padding()
         }
     }
