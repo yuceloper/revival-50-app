@@ -16,7 +16,6 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .bold()
 
-
             // MARK: BLE STATUS
 
             Text(bluetooth.statusText)
@@ -27,7 +26,6 @@ struct ContentView: View {
                         : .secondary
                 )
 
-
             // MARK: MOTOR STATUS
 
             VStack(spacing: 6) {
@@ -35,10 +33,7 @@ struct ContentView: View {
                 HStack {
 
                     Circle()
-                        .frame(
-                            width: 10,
-                            height: 10
-                        )
+                        .frame(width: 10, height: 10)
                         .foregroundStyle(
                             bluetooth.ignitionOn
                                 ? .green
@@ -53,25 +48,12 @@ struct ContentView: View {
                     .font(.headline)
                 }
 
-
                 HStack {
-
-                    Image(
-                        systemName:
-                            "battery.75percent"
-                    )
+                    Image(systemName: "battery.75percent")
 
                     if bluetooth.batteryVoltage > 0 {
-
-                        Text(
-                            String(
-                                format: "%.2f V",
-                                bluetooth.batteryVoltage
-                            )
-                        )
-
+                        Text(String(format: "%.2f V", bluetooth.batteryVoltage))
                     } else {
-
                         Text("--.-- V")
                     }
                 }
@@ -79,115 +61,79 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
             }
 
-
             // MARK: IGNITION
 
             Button {
-
                 bluetooth.sendCommand(
                     bluetooth.ignitionOn
                         ? "IGNITION_OFF"
                         : "IGNITION_ON"
                 )
-
             } label: {
-
                 Label(
                     bluetooth.ignitionOn
                         ? "Kontağı Kapat"
                         : "Kontağı Aç",
-
                     systemImage:
                         bluetooth.ignitionOn
                         ? "power.circle.fill"
                         : "power.circle"
                 )
-
                 .font(.title3)
-
-                .frame(
-                    maxWidth: .infinity
-                )
-
+                .frame(maxWidth: .infinity)
                 .padding()
             }
             .buttonStyle(.borderedProminent)
             .disabled(!bluetooth.connected)
 
-
             // MARK: START
 
             Button {
-
                 bluetooth.sendCommand("START")
-
             } label: {
-
                 Label(
                     bluetooth.starterActive
                         ? "Marş Basılıyor..."
                         : "Marş Bas",
-
                     systemImage:
                         bluetooth.starterActive
                         ? "bolt.circle.fill"
                         : "bolt.fill"
                 )
-
                 .font(.title3)
-
-                .frame(
-                    maxWidth: .infinity
-                )
-
+                .frame(maxWidth: .infinity)
                 .padding()
             }
-
             .buttonStyle(.bordered)
-
             .disabled(
+                !bluetooth.connected ||
                 !bluetooth.ignitionOn ||
                 bluetooth.starterActive
             )
 
-
             // MARK: SEAT
 
             Button {
-
-                bluetooth.sendCommand(
-                    "SEAT_OPEN"
-                )
-
+                bluetooth.sendCommand("SEAT_OPEN")
             } label: {
-
                 Label(
                     bluetooth.seatActive
                         ? "Sele Açılıyor..."
                         : "Seleyi Aç",
-
                     systemImage:
                         bluetooth.seatActive
                         ? "lock.open.fill"
                         : "lock.open"
                 )
-
                 .font(.title3)
-
-                .frame(
-                    maxWidth: .infinity
-                )
-
+                .frame(maxWidth: .infinity)
                 .padding()
             }
-
             .buttonStyle(.bordered)
-
             .disabled(
                 !bluetooth.connected ||
                 bluetooth.seatActive
             )
-
 
             Spacer()
         }
