@@ -6,20 +6,100 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		CED131FA30353BEF008E75AB /* RevivalWatch Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = CED131F030353BEE008E75AB /* RevivalWatch Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CED131E630353B4B008E75AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED131A630350F80008E75AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED131EF30353BEE008E75AB;
+			remoteInfo = "RevivalWatch Watch App";
+		};
+		CED131E830353B4D008E75AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED131A630350F80008E75AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED131BF30353239008E75AB;
+			remoteInfo = RevivalWatch;
+		};
+		CED131EA30353B65008E75AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED131A630350F80008E75AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED131EF30353BEE008E75AB;
+			remoteInfo = "RevivalWatch Watch App";
+		};
+		CED131F830353BEF008E75AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED131A630350F80008E75AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CED131EF30353BEE008E75AB;
+			remoteInfo = "RevivalWatch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CED131E230353B37008E75AB /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CED131FA30353BEF008E75AB /* RevivalWatch Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		CED131AE30350F80008E75AB /* RevivalControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RevivalControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CED131F030353BEE008E75AB /* RevivalWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevivalWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CED1320130353EB2008E75AB /* Exceptions for "RevivalControl" folder in "RevivalControl" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CED131AD30350F80008E75AB /* RevivalControl */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CED131B030350F80008E75AB /* RevivalControl */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CED1320130353EB2008E75AB /* Exceptions for "RevivalControl" folder in "RevivalControl" target */,
+			);
 			path = RevivalControl;
+			sourceTree = "<group>";
+		};
+		CED131C930353239008E75AB /* RevivalWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "RevivalWatch Watch App";
+			sourceTree = "<group>";
+		};
+		CED131F130353BEE008E75AB /* RevivalWatch Watch App */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "RevivalWatch Watch App";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		CED131AB30350F80008E75AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED131ED30353BEE008E75AB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				CED131B030350F80008E75AB /* RevivalControl */,
+				CED131C930353239008E75AB /* RevivalWatch Watch App */,
+				CED131F130353BEE008E75AB /* RevivalWatch Watch App */,
+				CED131DE30353B37008E75AB /* Frameworks */,
 				CED131AF30350F80008E75AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +124,16 @@
 			isa = PBXGroup;
 			children = (
 				CED131AE30350F80008E75AB /* RevivalControl.app */,
+				CED131F030353BEE008E75AB /* RevivalWatch Watch App.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		CED131DE30353B37008E75AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +146,15 @@
 				CED131AA30350F80008E75AB /* Sources */,
 				CED131AB30350F80008E75AB /* Frameworks */,
 				CED131AC30350F80008E75AB /* Resources */,
+				CED131E230353B37008E75AB /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CED131E730353B4B008E75AB /* PBXTargetDependency */,
+				CED131E930353B4D008E75AB /* PBXTargetDependency */,
+				CED131EB30353B65008E75AB /* PBXTargetDependency */,
+				CED131F930353BEF008E75AB /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				CED131B030350F80008E75AB /* RevivalControl */,
@@ -68,6 +164,28 @@
 			);
 			productName = RevivalControl;
 			productReference = CED131AE30350F80008E75AB /* RevivalControl.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CED131EF30353BEE008E75AB /* RevivalWatch Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CED131FB30353BEF008E75AB /* Build configuration list for PBXNativeTarget "RevivalWatch Watch App" */;
+			buildPhases = (
+				CED131EC30353BEE008E75AB /* Sources */,
+				CED131ED30353BEE008E75AB /* Frameworks */,
+				CED131EE30353BEE008E75AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				CED131F130353BEE008E75AB /* RevivalWatch Watch App */,
+			);
+			name = "RevivalWatch Watch App";
+			packageProductDependencies = (
+			);
+			productName = "RevivalWatch Watch App";
+			productReference = CED131F030353BEE008E75AB /* RevivalWatch Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -81,6 +199,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					CED131AD30350F80008E75AB = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					CED131EF30353BEE008E75AB = {
 						CreatedOnToolsVersion = 26.6;
 					};
 				};
@@ -100,12 +221,20 @@
 			projectRoot = "";
 			targets = (
 				CED131AD30350F80008E75AB /* RevivalControl */,
+				CED131EF30353BEE008E75AB /* RevivalWatch Watch App */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CED131AC30350F80008E75AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CED131EE30353BEE008E75AB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +251,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CED131EC30353BEE008E75AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CED131E730353B4B008E75AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CED131EF30353BEE008E75AB /* RevivalWatch Watch App */;
+			targetProxy = CED131E630353B4B008E75AB /* PBXContainerItemProxy */;
+		};
+		CED131E930353B4D008E75AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			targetProxy = CED131E830353B4D008E75AB /* PBXContainerItemProxy */;
+		};
+		CED131EB30353B65008E75AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CED131EF30353BEE008E75AB /* RevivalWatch Watch App */;
+			targetProxy = CED131EA30353B65008E75AB /* PBXContainerItemProxy */;
+		};
+		CED131F930353BEF008E75AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CED131EF30353BEE008E75AB /* RevivalWatch Watch App */;
+			targetProxy = CED131F830353BEF008E75AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CED131B730350F81008E75AB /* Debug */ = {
@@ -256,6 +414,8 @@
 				DEVELOPMENT_TEAM = 46S4PVPU5P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RevivalControl/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Revival 50 motor kontrol ünitesine Bluetooth ile bağlanmak için kullanılır.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +448,8 @@
 				DEVELOPMENT_TEAM = 46S4PVPU5P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RevivalControl/Info.plist;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Revival 50 motor kontrol ünitesine Bluetooth ile bağlanmak için kullanılır.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -310,6 +472,72 @@
 			};
 			name = Release;
 		};
+		CED131FC30353BEF008E75AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46S4PVPU5P;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RevivalWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.yuceloper.RevivalControl;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuceloper.RevivalControl.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Debug;
+		};
+		CED131FD30353BEF008E75AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 46S4PVPU5P;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = RevivalWatch;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.yuceloper.RevivalControl;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuceloper.RevivalControl.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 26.5;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -327,6 +555,15 @@
 			buildConfigurations = (
 				CED131BA30350F81008E75AB /* Debug */,
 				CED131BB30350F81008E75AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CED131FB30353BEF008E75AB /* Build configuration list for PBXNativeTarget "RevivalWatch Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CED131FC30353BEF008E75AB /* Debug */,
+				CED131FD30353BEF008E75AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
