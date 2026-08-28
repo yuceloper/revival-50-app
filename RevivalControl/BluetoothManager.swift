@@ -10,10 +10,17 @@ final class BluetoothManager:
 
     @Published var statusText: String = "Bluetooth hazırlanıyor..."
     @Published var foundRevival = false
-    
     @Published var connected = false
+
+    @Published var ignitionOn = false
+    @Published var batteryVoltage: Double = 0
+    @Published var starterActive = false
+    @Published var seatActive = false
+
     private var revivalPeripheral: CBPeripheral?
-    
+    private var commandCharacteristic: CBCharacteristic?
+    private var centralManager: CBCentralManager!
+
     private let serviceUUID = CBUUID(
         string: "12345678-1234-1234-1234-1234567890ab"
     )
@@ -22,14 +29,6 @@ final class BluetoothManager:
         string: "abcdefab-1234-5678-1234-abcdefabcdef"
     )
 
-    private var commandCharacteristic: CBCharacteristic?
-
-    private var centralManager: CBCentralManager!
-    @Published var ignitionOn = false
-    @Published var batteryVoltage: Double = 0
-    @Published var starterActive = false
-    @Published var seatActive = false
-
     override init() {
         super.init()
 
@@ -37,7 +36,7 @@ final class BluetoothManager:
             delegate: self,
             queue: nil
         )
-        
+
         WatchSessionManager.shared.onCommandReceived = { [weak self] command in
             return self?.sendCommand(command) ?? false
         }
@@ -49,18 +48,22 @@ final class BluetoothManager:
 
         case .poweredOn:
             startScanning()
-            
+
         case .poweredOff:
             statusText = "Bluetooth kapalı"
+            resetVehicleStateAndSyncWatch()
 
         case .unauthorized:
             statusText = "Bluetooth izni verilmemiş"
+            resetVehicleStateAndSyncWatch()
 
         case .unsupported:
             statusText = "Bluetooth desteklenmiyor"
+            resetVehicleStateAndSyncWatch()
 
         case .resetting:
             statusText = "Bluetooth yeniden başlatılıyor..."
+            resetVehicleStateAndSyncWatch()
 
         case .unknown:
             statusText = "Bluetooth durumu bilinmiyor"
@@ -84,22 +87,18 @@ final class BluetoothManager:
 
         print("BLE bulundu: \(name) RSSI: \(RSSI)")
 
-        if name == "Revival50" {
-
-            foundRevival = true
-            statusText = "Revival50 bulundu, bağlanılıyor..."
-
-            revivalPeripheral = peripheral
-
-            central.stopScan()
-
-            central.connect(
-                peripheral,
-                options: nil
-            )
+        guard name == "Revival50" else {
+            return
         }
+
+        foundRevival = true
+        statusText = "Revival50 bulundu, bağlanılıyor..."
+        revivalPeripheral = peripheral
+
+        central.stopScan()
+        central.connect(peripheral, options: nil)
     }
-    
+
     func centralManager(
         _ central: CBCentralManager,
         didConnect peripheral: CBPeripheral
@@ -107,6 +106,7 @@ final class BluetoothManager:
         connected = true
         statusText = "Revival50 bağlandı ✅"
 
+        revivalPeripheral = peripheral
         peripheral.delegate = self
         peripheral.discoverServices([serviceUUID])
 
@@ -121,6 +121,9 @@ final class BluetoothManager:
         connected = false
         foundRevival = false
         commandCharacteristic = nil
+        revivalPeripheral = nil
+
+        resetVehicleStateAndSyncWatch()
 
         if let error = error {
             print("ESP32 bağlantısı kesildi: \(error.localizedDescription)")
@@ -134,7 +137,7 @@ final class BluetoothManager:
             self.startScanning()
         }
     }
-    
+
     func centralManager(
         _ central: CBCentralManager,
         didFailToConnect peripheral: CBPeripheral,
@@ -143,6 +146,9 @@ final class BluetoothManager:
         connected = false
         foundRevival = false
         commandCharacteristic = nil
+        revivalPeripheral = nil
+
+        resetVehicleStateAndSyncWatch()
 
         print(
             "Bağlantı başarısız: \(error?.localizedDescription ?? "Bilinmeyen hata")"
@@ -154,7 +160,7 @@ final class BluetoothManager:
             self.startScanning()
         }
     }
-    
+
     func peripheral(
         _ peripheral: CBPeripheral,
         didDiscoverServices error: Error?
@@ -168,13 +174,11 @@ final class BluetoothManager:
             return
         }
 
-        for service in services {
-            if service.uuid == serviceUUID {
-                peripheral.discoverCharacteristics(
-                    [characteristicUUID],
-                    for: service
-                )
-            }
+        for service in services where service.uuid == serviceUUID {
+            peripheral.discoverCharacteristics(
+                [characteristicUUID],
+                for: service
+            )
         }
     }
 
@@ -192,13 +196,11 @@ final class BluetoothManager:
             return
         }
 
-        for characteristic in characteristics {
-            if characteristic.uuid == characteristicUUID {
-                commandCharacteristic = characteristic
-                peripheral.setNotifyValue(true, for: characteristic)
-                statusText = "Revival50 hazır ✅"
-                print("Komut characteristic bulundu")
-            }
+        for characteristic in characteristics where characteristic.uuid == characteristicUUID {
+            commandCharacteristic = characteristic
+            peripheral.setNotifyValue(true, for: characteristic)
+            statusText = "Revival50 hazır ✅"
+            print("Komut characteristic bulundu")
         }
     }
 
@@ -223,7 +225,7 @@ final class BluetoothManager:
         print("Gönderildi: \(command)")
         return true
     }
-    
+
     private func startScanning() {
         guard centralManager.state == .poweredOn else {
             return
@@ -245,7 +247,21 @@ final class BluetoothManager:
 
         print("BLE taraması başladı")
     }
-    
+
+    private func resetVehicleStateAndSyncWatch() {
+        ignitionOn = false
+        starterActive = false
+        seatActive = false
+        batteryVoltage = 0
+
+        WatchSessionManager.shared.sendStatusToWatch(
+            ignitionOn: false,
+            starterActive: false,
+            seatActive: false,
+            batteryVoltage: 0
+        )
+    }
+
     func peripheral(
         _ peripheral: CBPeripheral,
         didUpdateValueFor characteristic: CBCharacteristic,
@@ -277,41 +293,30 @@ final class BluetoothManager:
         var newBattery = batteryVoltage
 
         for partSubstring in parts {
-
             let part = String(partSubstring)
 
             if part.hasPrefix("STATE:") {
-
                 let state = part.replacingOccurrences(
                     of: "STATE:",
                     with: ""
                 )
-
                 newIgnition = state == "ON"
             }
-
             else if part.hasPrefix("STARTER:") {
-
                 let state = part.replacingOccurrences(
                     of: "STARTER:",
                     with: ""
                 )
-
                 newStarter = state == "ON"
             }
-
             else if part.hasPrefix("SEAT:") {
-
                 let state = part.replacingOccurrences(
                     of: "SEAT:",
                     with: ""
                 )
-
                 newSeat = state == "ON"
             }
-
             else if part.hasPrefix("BAT:") {
-
                 let voltageString = part.replacingOccurrences(
                     of: "BAT:",
                     with: ""
@@ -321,11 +326,9 @@ final class BluetoothManager:
                     newBattery = voltage
                 }
             }
-            
         }
 
         DispatchQueue.main.async {
-
             self.ignitionOn = newIgnition
             self.starterActive = newStarter
             self.seatActive = newSeat
@@ -339,7 +342,7 @@ final class BluetoothManager:
             )
         }
     }
-    
+
     func peripheral(
         _ peripheral: CBPeripheral,
         didUpdateNotificationStateFor characteristic: CBCharacteristic,
@@ -356,7 +359,6 @@ final class BluetoothManager:
         }
 
         print("BLE notifications aktif ✅")
-
         sendCommand("STATUS")
     }
 }
