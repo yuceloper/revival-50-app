@@ -9,12 +9,16 @@ Apple Watch / iPhone kontrollü Mondial Revival 50 retrofit projesi.
 - ESP32-S3 -> ULN2003A -> 4x 12V otomotiv rölesi
 - Röleler: kontak, kill, marş, sele
 
-## Dizinler
+## Proje yapısı
 
-- `firmware/` ESP32-S3 Arduino firmware
-- `ios/` iPhone SwiftUI / CoreBluetooth kaynakları
-- `watch/` Apple Watch SwiftUI / WatchConnectivity kaynakları
-- `docs/` bağlantı ve montaj notları
+- `RevivalControl.xcodeproj/` gerçek Xcode projesi
+- `RevivalControl/` iPhone uygulamasının gerçek kaynakları
+- `RevivalWatch Watch App/` Apple Watch uygulamasının gerçek kaynakları
+- `RevivalWatch-Watch-App-Info.plist` Watch target yapılandırması
+- `firmware/revival50/revival50.ino` ESP32-S3 firmware
+- `docs/wiring.md` bağlantı ve montaj dokümantasyonu
+
+> Not: `ios/`, `watch/` ve kökteki `revival50.ino` ilk repo kurulumunda oluşturulan snapshot/duplicate kopyalardır. Gerçek geliştirme kaynakları yukarıdaki Xcode klasörleri ve `firmware/` altındadır. Bu kopyalar sonraki temizlikte kaldırılmalıdır.
 
 ## BLE
 
@@ -44,6 +48,14 @@ ESP32 status örneği:
 - GPIO7: Kill
 - GPIO1: Battery ADC
 
-## Güvenlik
+## Donanım güvenliği
 
-Motor tesisatı üzerinde çalışırken akünün eksi kutbunu sökün. ESP32 GPIO pinlerine doğrudan 12V bağlamayın. Marş rölesi marş motorunun kalın güç kablosuna değil, marş butonunun kumanda hattına paralel bağlanır.
+- Motor tesisatı üzerinde çalışırken akünün eksi kutbunu sökün.
+- ESP32 GPIO pinlerine doğrudan 12V bağlamayın.
+- Marş rölesi marş motorunun yüksek akımlı kalın kablosuna değil, marş butonunun kumanda hattına paralel bağlanır.
+- Gri kill hattına +12V uygulanmaz.
+- Buck converter çıkışı ESP32'ye bağlanmadan önce multimetre ile 5V doğrulanmalıdır.
+
+## Geliştirme notu
+
+Yeni iPhone değişiklikleri `RevivalControl/` altında, Watch değişiklikleri `RevivalWatch Watch App/` altında yapılmalıdır. `ios/` ve `watch/` dizinleri kaynak olarak kullanılmamalıdır.
